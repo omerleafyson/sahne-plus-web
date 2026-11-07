@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090f36">
+  <meta name="theme-color" content="#050505">
   <meta name="description" content="Sahne Plus çok yakında. Yeteneklerin, yarışmaların ve eğlencenin yeni sahnesi hazırlanıyor.">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
@@ -13,6 +13,7 @@
   <meta property="og:url" content="https://sahneplus.tr/">
   <link rel="canonical" href="https://sahneplus.tr/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/background.avif" as="image" type="image/avif">
   <title>Sahne Plus | Çok Yakında</title>
   <style>
     :root{color-scheme:dark;--white:#f8f9ff;--muted:#cfd4f0;--blue:#345fff;--purple:#9b29ff}
@@ -56,6 +57,14 @@
     }
     @media(max-height:700px){.hero{padding-top:130px;padding-bottom:64px}.brand-icon{width:110px}.flare{margin:17px 0 22px}.status{margin-top:23px}.tagline{margin-top:22px}}
     @media(prefers-reduced-motion:no-preference){.arc::after{animation:glimmer 7s ease-in-out infinite}.flare::before{animation:pulse 6s ease-in-out infinite}@keyframes glimmer{0%,100%{opacity:.7}50%{opacity:1}}@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}}
+    /* Founder-supplied metallic ring background, no generated imagery. */
+    html,body{background:#050505}
+    body::before{
+      background:linear-gradient(180deg,rgba(0,0,0,.17) 0%,rgba(0,0,0,.33) 48%,rgba(0,0,0,.48) 100%),url("/background.avif") center center / cover no-repeat;
+    }
+    .stars,.arc,.floor{display:none}
+    .brand-name,h1,.subtitle,.tagline,footer{text-shadow:0 2px 28px rgba(0,0,0,.95)}
+    @media(max-width:600px){body::before{background-position:center center}}
   </style>
 </head>
 <body>
