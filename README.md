@@ -4,8 +4,16 @@ Sahne Plus, AURA Technology için yarışmacı başvurusu, moderasyon, halk oyla
 
 Bu depo Sahne Plus web sitesi içindir; Ömer Yapraklıoğlu kişisel sitesi ve AURA Snap projelerinden ayrıdır.
 
-## Kurulum durumu
+## Geçici yayın: Çok Yakında
 
-Proje deposu ilk commit ile oluşturuldu. Premium web sitesi kaynak kodlarının (`apps/web`, `services/api`, `package.json`, `package-lock.json`, `wrangler.jsonc`) ayrıca yüklenmesi gereklidir. Kod yüklenene kadar Cloudflare build/deploy denenmemelidir.
+Tam yarışma platformunun `apps/web` ve `services/api` entegrasyonları hazırlanana kadar Cloudflare Workers üzerinde geçici, statik “Çok Yakında” sayfası yayınlanır. Bu geçici site gerçek yarışma, moderasyon, oylama veya Firebase özelliklerini içermez.
 
-Cloudflare Workers Builds için Vite web derlemesi ve Wrangler static assets yapılandırması gereklidir. Gerçek Firebase/Express API ayrı entegrasyondur.
+Cloudflare Workers Builds ayarları:
+- Repository: `omerleafyson/sahne-plus-web`
+- Production branch: `main`
+- Root directory: `/`
+- Build command: `npm ci && npm run build -w @sahneplus/web`
+- Deploy command: `npx wrangler deploy`
+- Output: `apps/web/dist` (Wrangler assets)
+
+Gerçek Firebase/Express API daha sonra, doğrulama yapılarak ayrıca bağlanacaktır.
