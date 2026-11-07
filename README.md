@@ -25,3 +25,7 @@ Geçici site yarışma, moderasyon, oylama veya Firebase API işlevlerini henüz
 **Önemli:** GitHub'da güncel commit bulunması, Cloudflare'ın o commit'i canlıya dağıttığını kanıtlamaz. Dağıtımda son `main` commit'i, üretim sürümünün hash'i ve canlı sayfadaki `Çok Yakında` başlığı + `/favicon.svg` HTTP 200 sonucu ayrıca doğrulanmalıdır.
 
 Gerçek Firebase/Express API daha sonra ayrı entegrasyondur.
+
+## Güncel görünüm
+
+Kurucu tarafından sağlanan siyah zeminli pembe-mavi metalik halka görseli `apps/web/background.avif` dosyası olarak optimize edilmiştir. `apps/web/index.html` arka planı doğrudan bu görselden okur. `apps/web/build.mjs` bu dosyayı Cloudflare Workers statik varlıklarına kopyalar. Sahne Plus S+ logosu ve mobil yerleşim korunur.
