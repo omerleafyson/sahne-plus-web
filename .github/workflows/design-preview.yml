@@ -28,10 +28,10 @@ jobs:
           grep -q '^name = "sahne-plus-web"$' wrangler.toml
           npm ci --no-audit --no-fund
           npm run build
-          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi muzik yeni-cikanlar populer-100 muzik-oynatici album-detayi klipler klip-izle calma-listelerim muzik-basvurusu originals sanatcilar sanatci-profili sarkicilar oyuncular komedyenler danscilar fenomenler diger-yetenekler sanatci-rezervasyonu menajerlik sahne-plus-tv canli-izle programlar program-detayi roportajlar kamera-arkasi yayin-akisi; do
+          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi muzik yeni-cikanlar populer-100 muzik-oynatici album-detayi klipler klip-izle calma-listelerim muzik-basvurusu originals sanatcilar sanatci-profili sarkicilar oyuncular komedyenler danscilar fenomenler diger-yetenekler sanatci-rezervasyonu menajerlik sahne-plus-tv canli-izle programlar program-detayi roportajlar kamera-arkasi yayin-akisi etkinlikler konserler etkinlik-detayi bilet-satin-al biletlerim organizasyon-talebi kurumsal-etkinlikler hayran-bulusmalari; do
             test -s "apps/web/dist/$file.html"
           done
-          for script in feature-pages competition competition-admin competition-showcase music-core music talent-core talent tv-core tv; do node --check "apps/web/dist/$script.js"; done
+          for script in feature-pages competition competition-admin competition-showcase music-core music talent-core talent tv-core tv events-core events; do node --check "apps/web/dist/$script.js"; done
           node --check server/competition-worker.mjs
           node apps/web/music-core.test.mjs
           test -s apps/web/dist/music-catalog.json
@@ -39,8 +39,18 @@ jobs:
           test -s apps/web/dist/artist-catalog.json
           node apps/web/tv-core.test.mjs
           test -s apps/web/dist/tv-catalog.json
+          node apps/web/events-core.test.mjs
+          test -s apps/web/dist/event-catalog.json
           printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > apps/web/dist/_headers
           printf '%s\n' "$GITHUB_SHA" > apps/web/dist/preview-revision.txt
+      - name: Real Chromium event page checks before preview
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          npm install --prefix "$RUNNER_TEMP/sp-event-qa" --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.1
+          printf 'SP_CHROME=%s\n' "$chrome" >> "$GITHUB_ENV"
+          printf 'SP_PLAYWRIGHT_MODULE=%s\n' "$RUNNER_TEMP/sp-event-qa/node_modules/playwright-core/index.mjs" >> "$GITHUB_ENV"
+          SP_CHROME="$chrome" SP_PLAYWRIGHT_MODULE="$RUNNER_TEMP/sp-event-qa/node_modules/playwright-core/index.mjs" node apps/web/events-browser.test.mjs
       - name: Verify credentials and identify one Cloudflare account
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN || secrets.CLOUDFLARE_TOKEN }}
@@ -68,3 +78,21 @@ jobs:
           npx --yes wrangler@4.135.0 preview --config wrangler.preview.toml --name tasarim-test 2>&1 | tee /tmp/preview-result.log
           printf '### Cloudflare tasarim-test\n\n' >> "$GITHUB_STEP_SUMMARY"
           grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' /tmp/preview-result.log | sort -u | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Verify actual deployed preview revision and browser routes
+        run: |
+          set -euo pipefail
+          preview_url="$(grep -E 'Preview URL:' /tmp/preview-result.log | grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' | tail -1)"
+          unique_url="$(grep -E 'Unique Deployment URL:' /tmp/preview-result.log | grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' | tail -1)"
+          test -n "$preview_url"
+          test -n "$unique_url"
+          SP_PREVIEW_URL="$unique_url" SP_REVISION="$GITHUB_SHA" node apps/web/events-browser.test.mjs
+          for attempt in 1 2 3 4 5; do
+            revision="$(curl -fsS --max-time 15 "$preview_url/preview-revision.txt?rev=$GITHUB_SHA" || true)"
+            if [ "$revision" = "$GITHUB_SHA" ]; then
+              printf 'PASS: stable preview URL matches revision %s\n' "$revision"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Stable preview revision was not verified"
+          exit 1

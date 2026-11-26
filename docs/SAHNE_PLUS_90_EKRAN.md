@@ -74,14 +74,14 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 ## Etkinlikler ve organizasyonlar
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
-| 47 | Etkinlikler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 48 | Konserler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 49 | Etkinlik Detayı | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 50 | Bilet Satın Al | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 51 | Biletlerim | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 52 | Organizasyon Talebi | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 53 | Kurumsal Etkinlikler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 54 | Hayran Buluşmaları | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 47 | Etkinlikler | /etkinlikler — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 48 | Konserler | /konserler — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 49 | Etkinlik Detayı | /etkinlik-detayi — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 50 | Bilet Satın Al | /bilet-satin-al — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 51 | Biletlerim | /biletlerim — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 52 | Organizasyon Talebi | /organizasyon-talebi — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 53 | Kurumsal Etkinlikler | /kurumsal-etkinlikler — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
+| 54 | Hayran Buluşmaları | /hayran-bulusmalari — test arayüzü; gerçek katalog, hesap, bilet ve rezervasyon altyapısı bekliyor |
 
 ## Kullanıcı ve sosyal medya
 | No | Ekran | Mevcut rota / durum |
