@@ -28,11 +28,13 @@ jobs:
           grep -q '^name = "sahne-plus-web"$' wrangler.toml
           npm ci --no-audit --no-fund
           npm run build
-          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi; do
+          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi muzik yeni-cikanlar populer-100 muzik-oynatici album-detayi klipler klip-izle calma-listelerim muzik-basvurusu originals; do
             test -s "apps/web/dist/$file.html"
           done
-          for script in feature-pages competition competition-admin competition-showcase; do node --check "apps/web/dist/$script.js"; done
+          for script in feature-pages competition competition-admin competition-showcase music-core music; do node --check "apps/web/dist/$script.js"; done
           node --check server/competition-worker.mjs
+          node apps/web/music-core.test.mjs
+          test -s apps/web/dist/music-catalog.json
           printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > apps/web/dist/_headers
           printf '%s\n' "$GITHUB_SHA" > apps/web/dist/preview-revision.txt
       - name: Verify credentials and identify one Cloudflare account
