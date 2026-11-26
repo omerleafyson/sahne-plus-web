@@ -48,16 +48,16 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 ## Sanatçılar ve profesyonel yetenekler
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
-| 29 | Sanatçılarımız | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 30 | Sanatçı Profili | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 31 | Şarkıcılar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 32 | Oyuncular | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 33 | Komedyenler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 34 | Dansçılar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 35 | Fenomenler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 36 | Diğer Yetenekler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 37 | Sanatçı Rezervasyonu | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 38 | Menajerlik | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 29 | Sanatçılarımız | /sanatcilar — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 30 | Sanatçı Profili | /sanatci-profili — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 31 | Şarkıcılar | /sarkicilar — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 32 | Oyuncular | /oyuncular — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 33 | Komedyenler | /komedyenler — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 34 | Dansçılar | /danscilar — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 35 | Fenomenler | /fenomenler — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 36 | Diğer Yetenekler | /diger-yetenekler — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 37 | Sanatçı Rezervasyonu | /sanatci-rezervasyonu — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
+| 38 | Menajerlik | /menajerlik — test arayüzü; gerçek sözleşmeli portföy ve talep altyapısı bekliyor |
 
 ## Canlı yayın, televizyon ve programlar
 | No | Ekran | Mevcut rota / durum |
