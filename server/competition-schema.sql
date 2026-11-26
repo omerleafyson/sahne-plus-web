@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS applications (
  id TEXT PRIMARY KEY, code_hash TEXT NOT NULL UNIQUE, full_name TEXT NOT NULL,
  phone TEXT NOT NULL, category TEXT NOT NULL CHECK(category IN ('music','dance','acting','comedy','sport','magic','other')),
- object_key TEXT NOT NULL CHECK(object_key LIKE 'applications/%'), mime TEXT NOT NULL, bytes INTEGER NOT NULL,
+ object_key TEXT NOT NULL CHECK(object_key LIKE 'applications/%'), sha256 TEXT NOT NULL, mime TEXT NOT NULL, bytes INTEGER NOT NULL,
  agreement_version TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected','invited','filmed','published')),
  notification TEXT NOT NULL DEFAULT 'pending', contacted INTEGER NOT NULL DEFAULT 0, reviewed_at TEXT,
