@@ -28,10 +28,13 @@ jobs:
           grep -q '^name = "sahne-plus-web"$' wrangler.toml
           npm ci --no-audit --no-fund
           npm run build
-          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety; do
+          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi; do
             test -s "apps/web/dist/$file.html"
           done
-          node --check apps/web/dist/feature-pages.js
+          for script in feature-pages competition competition-admin competition-showcase; do node --check "apps/web/dist/$script.js"; done
+          node --check server/competition-worker.mjs
+          printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > apps/web/dist/_headers
+          printf '%s\n' "$GITHUB_SHA" > apps/web/dist/preview-revision.txt
       - name: Verify credentials and identify one Cloudflare account
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN || secrets.CLOUDFLARE_TOKEN }}
