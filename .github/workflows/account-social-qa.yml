@@ -1,0 +1,37 @@
+name: Account social isolated QA (no deploy)
+on:
+  pull_request:
+    branches: [design-preview]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  account-social-qa:
+    if: github.event.pull_request.head.ref == 'develop/account-social-20261126' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and isolated contracts
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          npm ci --no-audit --no-fund
+          npm run build
+          for route in giris-yap kayit-ol kullanici-profili profil-duzenle performans-paylas bildirimler mesajlar takipciler kaydedilenler izleme-gecmisi icerik-uretici-merkezi kazancim; do
+            test -s "apps/web/dist/$route.html"
+          done
+          node --check apps/web/dist/social-core.js
+          node --check apps/web/dist/social.js
+          node apps/web/social-core.test.mjs
+      - name: Local Chromium only (no external service requests)
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          npm install --prefix "$RUNNER_TEMP/sp-social-qa" --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.1
+          SP_CHROME="$chrome" SP_PLAYWRIGHT_MODULE="$RUNNER_TEMP/sp-social-qa/node_modules/playwright-core/index.mjs" node apps/web/social-browser.test.mjs
