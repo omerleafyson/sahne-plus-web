@@ -86,18 +86,18 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 ## Kullanıcı ve sosyal medya
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
-| 55 | Giriş Yap | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 56 | Kayıt Ol | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 57 | Kullanıcı Profili | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 58 | Profil Düzenle | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 59 | Video Yükle | /performans-paylas — Yalnız hazırlık rehberi; gerçek sosyal yükleme eksik |
-| 60 | Bildirimler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 61 | Mesajlar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 62 | Takipçiler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 63 | Kaydedilenler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 64 | İzleme Geçmişi | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 65 | İçerik Üreticisi Merkezi | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 66 | Kazançlarım | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 55 | Giriş Yap | /giris-yap — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 56 | Kayıt Ol | /kayit-ol — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 57 | Kullanıcı Profili | /kullanici-profili — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 58 | Profil Düzenle | /profil-duzenle — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 59 | Video Yükle | /performans-paylas — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 60 | Bildirimler | /bildirimler — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 61 | Mesajlar | /mesajlar — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 62 | Takipçiler | /takipciler — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 63 | Kaydedilenler | /kaydedilenler — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 64 | İzleme Geçmişi | /izleme-gecmisi — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 65 | İçerik Üreticisi Merkezi | /icerik-uretici-merkezi — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
+| 66 | Kazançlarım | /kazancim — izole arayüz; gerçek hesap ve sosyal servisler kapalı |
 
 ## Alışveriş, üyelik ve ticari
 | No | Ekran | Mevcut rota / durum |
