@@ -21,15 +21,15 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
 | 09 | Yarışmalar | /yarismalar — PR5: resmî yarışma listesi taslağı; çoklu yarışma eksik |
-| 10 | Yarışma Detayı | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 11 | Oy Ver | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 10 | Yarışma Detayı | /yarisma-detayi — kaynak hazır; resmî veri bekliyor |
+| 11 | Oy Ver | /oy-ver — kaynak hazır; kimlik ve oylama testi bekliyor |
 | 12 | Sıralamalar | /siralamalar — PR5: oy sıralama kodu; podyum ve gerçek test eksik |
 | 13 | Yarışmaya Başvur | /basvuru — PR5: özel form + kategori; altyapı bekliyor |
 | 14 | Başvuru Durumum | /basvuru-durumum — PR5: ayrı sorgu ve çekim daveti; altyapı bekliyor |
-| 15 | Yarışmacı Profili | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 16 | Finalistler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 17 | Kazananlar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 18 | Yarışma Takvimi | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 15 | Yarışmacı Profili | /yarismaci-profili — kaynak hazır; gerçek kayıt bekliyor |
+| 16 | Finalistler | /finalistler — kaynak hazır; resmî açıklama bekliyor |
+| 17 | Kazananlar | /kazananlar — kaynak hazır; kesinleşmiş sonuç bekliyor |
+| 18 | Yarışma Takvimi | /yarisma-takvimi — kaynak hazır; gerçek tarih bekliyor |
 
 ## Müzik ve klip
 | No | Ekran | Mevcut rota / durum |
