@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import './music-core.js';
+const M=globalThis.SPMusic;
+const published={status:'published',rightsVerified:true,releaseDate:'2020-01-01',artist:'TEST FIXTURE'};
+const album={...published,id:'a',title:'Album fixture',cover:'/music-media/a.jpg'};
+const track={...published,id:'t',title:'Track fixture',audio:'/music-media/t.mp3',albumId:'a',plays:12,playsVerified:true};
+const clip={...published,id:'c',title:'Clip fixture',cover:'/music-media/c.jpg',video:'/music-media/c.mp4',original:true};
+const d=M.normalize({albums:[album,{...album,id:'no-rights',rightsVerified:false}],tracks:[track,{...track,id:'future',releaseDate:'2999-01-01'},{...track,id:'external',audio:'https://example.com/a.mp3'},{...track,id:'wrongtype',audio:'/music-media/a.jpg'},{...track,id:'orphan',albumId:'missing'},{...track,id:'draft',status:'draft'}],clips:[clip,{...clip,id:'bad',video:'/music-media/../x.mp4'}]});
+assert.deepEqual(d.albums.map(x=>x.id),['a']);
+assert.deepEqual(d.tracks.map(x=>x.id),['t']);
+assert.deepEqual(d.clips.map(x=>x.id),['c']);
+assert.deepEqual(M.originals(d.clips).map(x=>x.id),['c']);
+assert.deepEqual(M.chart([track,{...track,id:'fake',plays:999,playsVerified:false},{...track,id:'b',plays:20}]).map(x=>x.id),['b','t']);
+assert.equal(M.chart(Array.from({length:110},(_,i)=>({...track,id:'t'+i,plays:i}))).length,100);
+assert.deepEqual(M.library({favorites:['t','t','bad id'],lists:[{id:'p',name:'List',tracks:['t','t']}]}),{favorites:['t'],lists:[{id:'p',name:'List',tracks:['t']}]});
+assert.equal(M.media('/music-media//a.mp3'),false);
+assert.deepEqual(M.normalize(null),{albums:[],tracks:[],clips:[]});
+console.log('PASS: 9 music catalog and local library contract assertions (synthetic fixtures; no public content).');
