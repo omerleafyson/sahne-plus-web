@@ -34,16 +34,16 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 ## Müzik ve klip
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
-| 19 | Sahne Plus Müzik | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 20 | Yeni Çıkanlar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 21 | Popüler 100 | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 22 | Müzik Oynatıcı | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 23 | Albüm Detayı | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 24 | Klipler | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 25 | Klip İzleme | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 26 | Çalma Listelerim | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 27 | Müzik Başvurusu | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 28 | Sahne Plus Originals | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 19 | Sahne Plus Müzik | /muzik — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 20 | Yeni Çıkanlar | /yeni-cikanlar — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 21 | Popüler 100 | /populer-100 — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 22 | Müzik Oynatıcı | /muzik-oynatici — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 23 | Albüm Detayı | /album-detayi — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 24 | Klipler | /klipler — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 25 | Klip İzleme | /klip-izle — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 26 | Çalma Listelerim | /calma-listelerim — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 27 | Müzik Başvurusu | /muzik-basvurusu — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
+| 28 | Sahne Plus Originals | /originals — test arayüzü ve katalog sözleşmesi; lisanslı içerik / altyapı bekliyor |
 
 ## Sanatçılar ve profesyonel yetenekler
 | No | Ekran | Mevcut rota / durum |
