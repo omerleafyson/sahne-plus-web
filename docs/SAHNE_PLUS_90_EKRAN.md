@@ -62,14 +62,14 @@ Kullanıcının 01–90 numaralandırması korunur. Her ekran özgün kompozisyo
 ## Canlı yayın, televizyon ve programlar
 | No | Ekran | Mevcut rota / durum |
 |---|---|---|
-| 39 | Sahne Plus TV | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 40 | Canlı Yayınlar | /canli-yayin — Statik kaynak mevcut; gerçek yayın eksik |
-| 41 | Canlı Yayın İzleme | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 42 | Programlar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 43 | Program Detayı | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 44 | Röportajlar | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 45 | Kamera Arkası | Kapsamda, uygulanmış olarak doğrulanmadı |
-| 46 | Yayın Akışı | Kapsamda, uygulanmış olarak doğrulanmadı |
+| 39 | Sahne Plus TV | /sahne-plus-tv — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 40 | Canlı Yayınlar | /canli-yayin — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 41 | Canlı Yayın İzleme | /canli-izle — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 42 | Programlar | /programlar — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 43 | Program Detayı | /program-detayi — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 44 | Röportajlar | /roportajlar — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 45 | Kamera Arkası | /kamera-arkasi — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
+| 46 | Yayın Akışı | /yayin-akisi — test arayüzü; yayın hakları ve gerçek medya hizmeti bekliyor |
 
 ## Etkinlikler ve organizasyonlar
 | No | Ekran | Mevcut rota / durum |
