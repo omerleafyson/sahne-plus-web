@@ -1,0 +1,98 @@
+name: Sahne Plus design preview
+on:
+  push:
+    branches: [design-preview]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sahne-plus-tasarim-test
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/design-preview' || (github.event_name == 'pull_request' && github.head_ref == 'design-preview' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and check exact static routes
+        run: |
+          grep -q '^name = "sahne-plus-web"$' wrangler.toml
+          npm ci --no-audit --no-fund
+          npm run build
+          for file in index kesfet yarismalar canli-yayin topluluk ozellikler performans-paylas siralamalar uygulama support gizlilik-politikasi hesap-silme child-safety basvuru basvuru-durumum basvuru-kosullari basvuru-inceleme yarisma-detayi oy-ver yarismaci-profili finalistler kazananlar yarisma-takvimi muzik yeni-cikanlar populer-100 muzik-oynatici album-detayi klipler klip-izle calma-listelerim muzik-basvurusu originals sanatcilar sanatci-profili sarkicilar oyuncular komedyenler danscilar fenomenler diger-yetenekler sanatci-rezervasyonu menajerlik sahne-plus-tv canli-izle programlar program-detayi roportajlar kamera-arkasi yayin-akisi etkinlikler konserler etkinlik-detayi bilet-satin-al biletlerim organizasyon-talebi kurumsal-etkinlikler hayran-bulusmalari; do
+            test -s "apps/web/dist/$file.html"
+          done
+          for script in feature-pages competition competition-admin competition-showcase music-core music talent-core talent tv-core tv events-core events; do node --check "apps/web/dist/$script.js"; done
+          node --check server/competition-worker.mjs
+          node apps/web/music-core.test.mjs
+          test -s apps/web/dist/music-catalog.json
+          node apps/web/talent-core.test.mjs
+          test -s apps/web/dist/artist-catalog.json
+          node apps/web/tv-core.test.mjs
+          test -s apps/web/dist/tv-catalog.json
+          node apps/web/events-core.test.mjs
+          test -s apps/web/dist/event-catalog.json
+          printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > apps/web/dist/_headers
+          printf '%s\n' "$GITHUB_SHA" > apps/web/dist/preview-revision.txt
+      - name: Real Chromium event page checks before preview
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          npm install --prefix "$RUNNER_TEMP/sp-event-qa" --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.1
+          printf 'SP_CHROME=%s\n' "$chrome" >> "$GITHUB_ENV"
+          printf 'SP_PLAYWRIGHT_MODULE=%s\n' "$RUNNER_TEMP/sp-event-qa/node_modules/playwright-core/index.mjs" >> "$GITHUB_ENV"
+          SP_CHROME="$chrome" SP_PLAYWRIGHT_MODULE="$RUNNER_TEMP/sp-event-qa/node_modules/playwright-core/index.mjs" node apps/web/events-browser.test.mjs
+      - name: Verify credentials and identify one Cloudflare account
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN || secrets.CLOUDFLARE_TOKEN }}
+          PROVIDED_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Missing existing Cloudflare deployment API token. No deployment attempted."
+            exit 1
+          fi
+          if [ -n "$PROVIDED_ACCOUNT_ID" ]; then
+            echo "CLOUDFLARE_ACCOUNT_ID=$PROVIDED_ACCOUNT_ID" >> "$GITHUB_ENV"
+          else
+            account_json=$(curl --fail --silent --show-error -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Accept: application/json" "https://api.cloudflare.com/client/v4/accounts?per_page=50")
+            ACCOUNT_JSON="$account_json" node -e 'const x=JSON.parse(process.env.ACCOUNT_JSON||"{}");if(!x.success||!Array.isArray(x.result)||x.result.length!==1||!x.result[0].id){console.error("::error::Cloudflare account cannot be determined unambiguously.");process.exit(1)}console.log("CLOUDFLARE_ACCOUNT_ID="+x.result[0].id)' >> "$GITHUB_ENV"
+          fi
+      - name: Upload isolated preview, never deploy production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN || secrets.CLOUDFLARE_TOKEN }}
+        run: |
+          set -o pipefail
+          cp wrangler.toml wrangler.preview.toml
+          if ! grep -q '^\[previews\]' wrangler.preview.toml; then
+            printf '\n[previews]\n' >> wrangler.preview.toml
+          fi
+          npx --yes wrangler@4.135.0 preview --config wrangler.preview.toml --name tasarim-test 2>&1 | tee /tmp/preview-result.log
+          printf '### Cloudflare tasarim-test\n\n' >> "$GITHUB_STEP_SUMMARY"
+          grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' /tmp/preview-result.log | sort -u | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Verify actual deployed preview revision and browser routes
+        run: |
+          set -euo pipefail
+          preview_url="$(grep -E 'Preview URL:' /tmp/preview-result.log | grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' | tail -1)"
+          unique_url="$(grep -E 'Unique Deployment URL:' /tmp/preview-result.log | grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' | tail -1)"
+          test -n "$preview_url"
+          test -n "$unique_url"
+          SP_PREVIEW_URL="$unique_url" SP_REVISION="$GITHUB_SHA" node apps/web/events-browser.test.mjs
+          for attempt in 1 2 3 4 5; do
+            revision="$(curl -fsS --max-time 15 "$preview_url/preview-revision.txt?rev=$GITHUB_SHA" || true)"
+            if [ "$revision" = "$GITHUB_SHA" ]; then
+              printf 'PASS: stable preview URL matches revision %s\n' "$revision"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Stable preview revision was not verified"
+          exit 1
